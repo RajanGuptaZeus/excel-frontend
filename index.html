@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="input-box">
+      <div class="fileUpload">
+        <label for="file">
+          <p id="inputFileName">Upload File type csv and excel</p>
+        </label>
+        <input type="file" id="file" accept=".csv,.xlsx,.xls" />
+        <!-- <button id="submitFile">Submit</button> -->
+        <div class="buttons">
+          <button class="container-btn-file" id="submitFile">
+            <svg
+              fill="#fff"
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 50 50"
+            >
+              <path
+                d="M28.8125 .03125L.8125 5.34375C.339844 
+             5.433594 0 5.863281 0 6.34375L0 43.65625C0 
+             44.136719 .339844 44.566406 .8125 44.65625L28.8125 
+             49.96875C28.875 49.980469 28.9375 50 29 50C29.230469 
+             50 29.445313 49.929688 29.625 49.78125C29.855469 49.589844 
+             30 49.296875 30 49L30 1C30 .703125 29.855469 .410156 29.625 
+             .21875C29.394531 .0273438 29.105469 -.0234375 28.8125 .03125ZM32 
+             6L32 13L34 13L34 15L32 15L32 20L34 20L34 22L32 22L32 27L34 27L34 
+             29L32 29L32 35L34 35L34 37L32 37L32 44L47 44C48.101563 44 49 
+             43.101563 49 42L49 8C49 6.898438 48.101563 6 47 6ZM36 13L44 
+             13L44 15L36 15ZM6.6875 15.6875L11.8125 15.6875L14.5 21.28125C14.710938 
+             21.722656 14.898438 22.265625 15.0625 22.875L15.09375 22.875C15.199219 
+             22.511719 15.402344 21.941406 15.6875 21.21875L18.65625 15.6875L23.34375 
+             15.6875L17.75 24.9375L23.5 34.375L18.53125 34.375L15.28125 
+             28.28125C15.160156 28.054688 15.035156 27.636719 14.90625 
+             27.03125L14.875 27.03125C14.8125 27.316406 14.664063 27.761719 
+             14.4375 28.34375L11.1875 34.375L6.1875 34.375L12.15625 25.03125ZM36 
+             20L44 20L44 22L36 22ZM36 27L44 27L44 29L36 29ZM36 35L44 35L44 37L36 37Z"
+              ></path>
+            </svg>
+            Upload File
+          </button>
+          <button class="container-btn-file" id="deleteBtn">
+            <i class="material-icons" style="font-size:22px; margin-right: 4px;">delete</i> Delete All the Data
+          </button>
+          <button class="container-btn-file" id="deleteSingleBtn">
+            <i class="material-icons" style="font-size:22px; margin-right: 4px;">delete</i>Delete Selected Data
+          </button>
+          <button class="container-btn-file" id="addDataBtn">Add Data</button>
+          <button id="updateRowBtn" class="container-btn-file">Update Records</button>
+        </div>
+        <p id="nameOfFile"></p>
+      </div>
+      <button></button>
+    </div>
+    <div id="scrollContainer" style="position: relative; width: 100%; height: 690px;">
+      <canvas id="spreadsheet"></canvas>
+      <div id="verticalScrollbar" style="position: absolute; right: 0; top: 0; width: 10px; height: 100%; background: #f0f0f0;">
+        <div id="scrollThumb" style="position: absolute; width: 100%; background: #888; cursor: pointer;"></div>
+      </div>
+      <div id="verticalScrollbar" style="position: absolute; left: 0; width: 10px; height: 100%; background: #f0f0f0;">
+        <div id="scrollThumb" style="position: absolute; width: 100%; background: #888; cursor: pointer;"></div>
+      </div>
+    </div>
+    <form class="addData hide" id="addData">
+      <div class="heading">
+        <div></div>
+        <p>Add Data to DataBase</p>
+        <span id="closeBtn">&#x2715;</span>
+      </div>
+      <div class="allInputs">
+        <div class="innerOne">
+          <input type="email" name="emailId" placeholder="Enter an Email" required/>
+          <input type="text" name="name" placeholder="Enter Name" required/>
+          <select name="country" required>
+            <option value="" selected disabled>Select Country</option>
+            <option value="India">India</option>
+          </select>
+          <select name="state" required>
+            <option value="" selected disabled>Select State</option>
+            <option value="Maharashtra">Maharashtra</option>
+          </select>
+          <select name="city" required>
+            <option value="" selected disabled>Select City</option>
+            <option value="Mumbai">Mumbai</option>
+          </select>
+          <input type="text" name="addressLine1" placeholder="Enter Address 1" required/>
+          <input type="text" name="addressLine2" placeholder="Enter Address 2" required/>
+        </div>
+        <div class="innerOne">
+          <input type="tel" name="telephoneNumber" placeholder="Enter a Phone Number" required />
+          <input type="datetime-local" name="dateOfBirth" required/>
+          <input type="number" name="grossSalaryFY2019_20" placeholder="Enter a GrossSalaryFY2019_20" required/>
+          <input type="number" name="grossSalaryFY2020_21" placeholder="Enter a GrossSalaryFY2020_21" required/>
+          <input type="number" name="grossSalaryFY2021_22" placeholder="Enter a GrossSalaryFY2021_22" required/>
+          <input type="number" name="grossSalaryFY2022_23" placeholder="Enter a GrossSalaryFY2022_23" required/>
+          <input type="number" name="grossSalaryFY2023_24" placeholder="Enter a GrossSalaryFY2023_24" required/>
+        </div>
+      </div>
+      <div class="btn">
+        <button type="submit">Submit</button>
+      </div>
+    </form>
+    
+    <script src="script.js"></script>
+  </body>
+</html>

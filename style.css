@@ -1,0 +1,157 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    overflow-y: hidden;
+    position: relative;
+}
+.input-box {
+    /* position: ; */
+    width: 100%;
+
+}
+.fileUpload {
+    margin: 0 10rem 0 10rem;
+    z-index: 100;
+    /* background-color: #fff; */
+    padding: 1rem; 
+}
+
+.fileUpload > label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10rem;
+    background-color: #307750;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 2px dotted black;
+}
+
+.fileUpload > label > p {
+    font-size: 1.5rem;
+    /* color: #050C9C; */
+    color: #fff;
+    font-weight: 700;
+}
+
+.fileUpload > input {
+    display: none;
+}
+
+.container-btn-file {
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    background-color: #307750;
+    color: #fff;
+    border-style: none;
+    padding: 1em 2em;
+    border-radius: 0.3em;
+    overflow: hidden;
+    z-index: 1;
+    box-shadow: 4px 8px 10px -3px rgba(0, 0, 0, 0.356);
+    transition: all 250ms;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+
+  .container-btn-file > svg {
+    margin-right: 1em;
+  }
+  .container-btn-file::before {
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 0;
+    border-radius: 0.3em;
+    background-color: #469b61;
+    z-index: -1;
+    transition: all 350ms;
+  }
+  .container-btn-file:hover::before {
+    width: 100%;
+  }
+
+
+.buttons{
+    display: flex;
+    padding: 2px;
+    margin-bottom: 3px;
+}
+
+canvas {
+    /* margin: 17rem 11px; */
+    overflow: hidden;
+    /* background: #fff; */
+}
+.addData {
+    position: absolute;
+    opacity: 0;
+    transform: translateY(-20px);
+    top: 25%;
+    left: 30%;
+    padding: 2rem 4rem;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 5px;
+    transition: opacity 350ms, transform 350ms;
+    visibility: hidden;
+}
+
+.show {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+}
+
+.hide {
+    opacity: 0;
+    transform: translateY(-20px);
+    visibility: hidden;
+}
+
+.heading{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 13px;
+}
+.heading > p{
+    font-size: 2rem;
+    font-weight: 900;
+    color: #137E43;
+}
+.heading > span {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #137E43;
+    cursor: pointer;
+}
+.allInputs {
+    display: flex;
+    width: 40rem;
+    justify-content: space-between;
+    align-items: center;
+}
+.innerOne {
+    width: 49%;
+}
+.innerOne > input , select {
+    width: 100%;
+    padding: 6px 12px;
+    margin-top: 10px;
+}
+.btn {
+ display: flex;
+ justify-content: center;
+ margin-top: 15px;
+}
+.btn > button {
+    padding: 10px 20px;
+    
+}
+
