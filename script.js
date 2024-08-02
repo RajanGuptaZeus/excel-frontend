@@ -11,7 +11,7 @@ let highLighCell = { x: null, y: null };
 let scrollTop = 0;
 let scrollLeft = 0;
 const cellWidth = 125;
-const cellHeight = 40;
+const cellHeight = 50;
 const columnHeaderHeight = 30;
 const rowHeaderWidth = 50;
 let cellCountX = 20;
@@ -290,19 +290,15 @@ function drawGrid() {
   // draw cell
   for (let i = startRow; i < endRow; i++) {
     for (let j = startCol; j < endCol; j++) {
-      const x =
-        rowHeaderWidth +
-        columnWidths.slice(0, j).reduce((a, b) => a + b, 0) -
-        scrollLeft;
-      const y =
-        columnHeaderHeight +
-        rowHeights.slice(0, i).reduce((a, b) => a + b, 0) -
-        scrollTop;
-      const cellData =
-        cellContents[i] && cellContents[i][j]
-          ? cellContents[i][j]
-          : { value: "", formula: "" };
-      // isCellSelected(j, i);
+      const x = rowHeaderWidth + columnWidths.slice(0, j).reduce((a, b) => a + b, 0) - scrollLeft;
+      let y;
+      // if (Math.abs(rowHeights.slice(0, i).reduce((a, b) => a + b, 0) - scrollTop) === 20 ) {
+      //   y = columnHeaderHeight + rowHeights.slice(0, i).reduce((a, b) => a + b, 0) - scrollTop + 20;
+      //   console.log(y);
+      // }
+      y = columnHeaderHeight + rowHeights.slice(0, i).reduce((a, b) => a + b, 0) - scrollTop;
+      console.log(columnHeaderHeight,rowHeights.slice(0, i).reduce((a, b) => a + b, 0),scrollTop);
+      const cellData = cellContents[i] && cellContents[i][j] ? cellContents[i][j] : { value: "", formula: "" };
       drawCell(x, y, cellData, columnWidths[j], rowHeights[i]);
     }
   }
@@ -446,11 +442,11 @@ function handleHeaderClick(event) {
 }
 
 function drawCell(x, y, cellData, width, height) {
-  c.font = "14px Arial";
+  c.font = "15px Arial";
   c.fillStyle = "black";
   c.textAlign = "left";
   c.textBaseline = "middle";
-
+  // console.log(x,y)
   let displayText = cellData?.value?.toString();
 
   // Truncate text if it's too long
@@ -494,11 +490,11 @@ function updateCellContent(x, y, value) {
     // const oldValue = cellContents[y][x].value;
 
     if (value.startsWith("=")) {
-      cellContents[y][x].formula = value;
+      cellContents[y][x].formula = value.trim();
       cellContents[y][x].value = evaluateFormula(value.substring(1), x, y);
     } else {
       cellContents[y][x].formula = "";
-      cellContents[y][x].value = value;
+      cellContents[y][x].value = value.trim();
     }
 
     // Add the row to the modifiedRows array with email and changed content
@@ -766,6 +762,7 @@ function showInputForCell(x, y) {
     input.style.position = "absolute";
     input.style.padding = "0 4px";
     input.style.zIndex = "10";
+    input.spellcheck = "true";
     scrollContainer.appendChild(input);
   }
 
