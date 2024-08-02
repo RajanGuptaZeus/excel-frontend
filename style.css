@@ -3,6 +3,9 @@
     padding: 0;
     box-sizing: border-box;
 }
+::selection {
+    color: orange;
+}
 body {
     overflow-y: hidden;
     position: relative;

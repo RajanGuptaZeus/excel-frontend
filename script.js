@@ -31,6 +31,7 @@ let isMouseDown = false;
 let isLoading = false;
 let isDragging = false;
 
+
 let modifiedRows = [];
 // file input
 const fileInput = document.getElementById("file");
@@ -254,11 +255,14 @@ function drawGrid() {
   const startCol = Math.floor(scrollLeft / cellWidth);
   const endCol = Math.min(startCol + visibleColumns, cellCountX);
 
+  
   // Draw headers
   drawHeaders();
+
   // Highlight selected cell's headers
   if (cellSelected.x !== null && cellSelected.y !== null) {
     isCellSelected(cellSelected.x, cellSelected.y);
+    
   }
 
   // Draw grid lines
@@ -291,13 +295,7 @@ function drawGrid() {
   for (let i = startRow; i < endRow; i++) {
     for (let j = startCol; j < endCol; j++) {
       const x = rowHeaderWidth + columnWidths.slice(0, j).reduce((a, b) => a + b, 0) - scrollLeft;
-      let y;
-      // if (Math.abs(rowHeights.slice(0, i).reduce((a, b) => a + b, 0) - scrollTop) === 20 ) {
-      //   y = columnHeaderHeight + rowHeights.slice(0, i).reduce((a, b) => a + b, 0) - scrollTop + 20;
-      //   console.log(y);
-      // }
-      y = columnHeaderHeight + rowHeights.slice(0, i).reduce((a, b) => a + b, 0) - scrollTop;
-      console.log(columnHeaderHeight,rowHeights.slice(0, i).reduce((a, b) => a + b, 0),scrollTop);
+      const y = columnHeaderHeight + rowHeights.slice(0, i).reduce((a, b) => a + b, 0) - scrollTop;
       const cellData = cellContents[i] && cellContents[i][j] ? cellContents[i][j] : { value: "", formula: "" };
       drawCell(x, y, cellData, columnWidths[j], rowHeights[i]);
     }
@@ -446,7 +444,6 @@ function drawCell(x, y, cellData, width, height) {
   c.fillStyle = "black";
   c.textAlign = "left";
   c.textBaseline = "middle";
-  // console.log(x,y)
   let displayText = cellData?.value?.toString();
 
   // Truncate text if it's too long
@@ -896,6 +893,9 @@ function handleWheel(event) {
   event.preventDefault();
   const oldScrollTop = scrollTop;
   scrollTop = Math.max(0, Math.min(maxScrollTop, scrollTop + event.deltaY));
+  if (scrollTop % 50 !== 0) {
+    scrollTop = Math.round(scrollTop / 50) * 50;
+  }
   scrollLeft = Math.max(0, Math.min(maxScrollLeft, scrollLeft + event.deltaX));
   if (oldScrollTop !== scrollTop) {
     handleScroll();
@@ -978,14 +978,14 @@ document.addEventListener("keydown", function (event) {
       case "ArrowRight":
         moveSelection(step, 0);
         break;
-      case " ":
+      case "Enter":
         handleEnterKeyPress();
         break;
     }
   }
 
   // Handle common keys regardless of focus
-  if (event.key === " ") {
+  if (event.key === "Enter") {
     handleEnterKeyPress();
   }
 
@@ -1030,7 +1030,10 @@ document.addEventListener("mousemove", (e) => {
   if (!isDragging) return;
   const deltaY = e.clientY - startY;
   const scrollRatio = deltaY / (verticalScrollbar.clientHeight - scrollThumb.clientHeight);
-  scrollTop = Math.max( 0, Math.min(maxScrollTop, startScrollTop + scrollRatio * maxScrollTop) );
+  scrollTop = Math.max( 0, Math.min(maxScrollTop, startScrollTop + Math.ceil(scrollRatio * maxScrollTop)) );
+  if (scrollTop % 50 !== 0) {
+    scrollTop = Math.round(scrollTop / 50) * 50;
+  }
   updateScrollThumb();
   drawGrid();
 });
@@ -1044,6 +1047,9 @@ verticalScrollbar.addEventListener("click", (e) => {
   if (e.target === scrollThumb) return;
   const clickRatio = (e.clientY - verticalScrollbar.getBoundingClientRect().top) / verticalScrollbar.clientHeight;
   scrollTop = Math.max(0, Math.min(maxScrollTop, clickRatio * maxScrollTop));
+  if (scrollTop % 50 !== 0) {
+    scrollTop = Math.round(scrollTop / 50) * 50;
+  }
   updateScrollThumb();
   drawGrid();
 });
@@ -1126,9 +1132,9 @@ async function updateRowsHandler() {
   // modifiedRows = [];
 }
 
-canvas.addEventListener("mousedown", handleMouseDown);
-canvas.addEventListener("mousemove", handleMouseMove);
-window.addEventListener("mouseup", handleMouseUp);
+canvas.addEventListener("pointerdown", handleMouseDown);
+canvas.addEventListener("pointermove", handleMouseMove);
+window.addEventListener("pointerup", handleMouseUp);
 canvas.addEventListener("wheel", handleWheel);
 canvas.addEventListener("dblclick", handleDoubleClick);
 window.addEventListener("resize", function () {
